@@ -3,5 +3,5 @@ module game {
     requires javafx.controls;
     requires java.xml;
 
-    exports uet.oop.BomberMan;
+    exports uet.oop.bomberman;
 }
