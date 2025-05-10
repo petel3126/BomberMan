@@ -1,5 +1,5 @@
 package uet.oop.bomberman;
-conlonlam va conlonlong
+
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
