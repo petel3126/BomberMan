@@ -16,5 +16,6 @@ public class Bomber extends Entity {
     public void update() {
         x += 10 ;
         y += 10;
+        // djt con me doi
     }
 }
