@@ -1,11 +1,12 @@
 package uet.oop.bomberman;
 
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -20,20 +21,34 @@ import uet.oop.bomberman.entities.Bomber;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Grass;
 import uet.oop.bomberman.entities.Wall;
+
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.entities.Bom;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
 
 public class BombermanGame extends Application {
 
     public static final int WIDTH = 20;
     public static final int HEIGHT = 15;
+
     public static Group root;
+
+    public static int _gameLevel=1;
+    public static int _mapHeight=0;
+    public static int _mapWidth=0;
+    public static int[][] objIdx;
+    public static int[][] listIsKilled;
+
+    public static Bomber player;
+
     private GraphicsContext gc;
     private Canvas canvas;
-    private List<Entity> entities = new ArrayList<>();
-    private List<Entity> stillObjects = new ArrayList<>();
+    public static List<Entity> entities = new ArrayList<>();
+    public static List<Entity> stillObjects = new ArrayList<>();
 
     public static ImageView imageView;
 
@@ -66,7 +81,12 @@ public class BombermanGame extends Application {
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
 
+        // tao laybel
+        Label scoreLabel = new Label("score :              " +  " level  : ");
+        scoreLabel.setStyle("-fx-font-size: 16px; -fx-padding: 10;");
+
         // Tao root container
+
         root = new Group();
         root.getChildren().add(canvas);
         menuGame = new MenuGame();
@@ -97,6 +117,7 @@ public class BombermanGame extends Application {
         root.getChildren().addAll(canvas, imageView, r);
 
 
+
         // Tao scene
         Scene scene = new Scene(root);
 
@@ -114,9 +135,14 @@ public class BombermanGame extends Application {
         timer.start();
 
         createMap();
-
-        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+        GameBoard gameBoard = new GameBoard(stillObjects);
+        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage(),gameBoard);
         entities.add(bomberman);
+
+        // xu ly phim
+        scene.setOnKeyPressed(bomberman::handleKeyPress);
+        scene.setOnKeyReleased(bomberman:: handleKeyRelease);
+
     }
 
     public void createMap() {
@@ -135,7 +161,15 @@ public class BombermanGame extends Application {
     }
 
     public void update() {
-        entities.forEach(Entity::update);
+        Iterator<Entity> iterator = entities.iterator();
+        while (iterator.hasNext()) {
+            Entity e = iterator.next();
+            e.update();
+            if (e.isRemoved()) {
+                iterator.remove();
+            }
+        }
+        ;
     }
 
     public void render() {
@@ -143,4 +177,5 @@ public class BombermanGame extends Application {
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
     }
+
 }

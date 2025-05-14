@@ -40,4 +40,5 @@ public class SpriteSheet {
 			System.exit(0);
 		}
 	}
+
 }
