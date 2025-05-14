@@ -3,18 +3,17 @@ package uet.oop.bomberman;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.VBox;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import uet.oop.bomberman.entities.Bomber;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Grass;
-import uet.oop.bomberman.entities.Wall;
+import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class BombermanGame extends Application {
@@ -24,8 +23,8 @@ public class BombermanGame extends Application {
     
     private GraphicsContext gc;
     private Canvas canvas;
-    private List<Entity> entities = new ArrayList<>();
-    private List<Entity> stillObjects = new ArrayList<>();
+    public static List<Entity> entities = new ArrayList<>();
+    public static List<Entity> stillObjects = new ArrayList<>();
 
 
     public static void main(String[] args) {
@@ -38,9 +37,13 @@ public class BombermanGame extends Application {
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
 
+        // tao laybel
+        Label scoreLabel = new Label("score :              " +  " level  : ");
+        scoreLabel.setStyle("-fx-font-size: 16px; -fx-padding: 10;");
+
         // Tao root container
-        Group root = new Group();
-        root.getChildren().add(canvas);
+        VBox root = new VBox();
+        root.getChildren().addAll(scoreLabel,canvas);
 
         // Tao scene
         Scene scene = new Scene(root);
@@ -59,9 +62,14 @@ public class BombermanGame extends Application {
         timer.start();
 
         createMap();
-
-        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+        GameBoard gameBoard = new GameBoard(stillObjects);
+        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage(),gameBoard);
         entities.add(bomberman);
+
+        // xu ly phim
+        scene.setOnKeyPressed(bomberman::handleKeyPress);
+        scene.setOnKeyReleased(bomberman:: handleKeyRelease);
+
     }
 
     public void createMap() {
@@ -80,7 +88,15 @@ public class BombermanGame extends Application {
     }
 
     public void update() {
-        entities.forEach(Entity::update);
+        Iterator<Entity> iterator = entities.iterator();
+        while (iterator.hasNext()) {
+            Entity e = iterator.next();
+            e.update();
+            if (e.isRemoved()) {
+                iterator.remove();
+            }
+        }
+        ;
     }
 
     public void render() {
@@ -88,4 +104,5 @@ public class BombermanGame extends Application {
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
     }
+
 }
