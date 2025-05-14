@@ -11,16 +11,24 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.entities.Bom;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+
 public class BombermanGame extends Application {
     
     public static final int WIDTH = 20;
     public static final int HEIGHT = 15;
-    
+    public static int _gameLevel=1;
+    public static int _mapHeight=0;
+    public static int _mapWidth=0;
+    public static int[][] objIdx;
+    public static int[][] listIsKilled;
+
+    public static Bomber player;
     private GraphicsContext gc;
     private Canvas canvas;
     public static List<Entity> entities = new ArrayList<>();
