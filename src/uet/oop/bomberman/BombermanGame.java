@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.entities.Bom;
+import uet.oop.bomberman.entities.Bomber;
 
 import java.util.ArrayList;
 import java.util.Iterator;
