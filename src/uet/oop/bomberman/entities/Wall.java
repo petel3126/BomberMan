@@ -1,6 +1,7 @@
 package uet.oop.bomberman.entities;
 
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 
 public class Wall extends Entity {
 
@@ -10,6 +11,5 @@ public class Wall extends Entity {
 
     @Override
     public void update() {
-
     }
 }
