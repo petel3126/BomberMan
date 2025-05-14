@@ -18,7 +18,7 @@ public class MenuPause extends Parent {
             entities.clear();
             enemies.clear();
             stillObjects.clear();
-            screen.stop();
+
             root.getChildren().removeAll(pp, View);
             root.getChildren().removeAll(bg, pa);
             root.getChildren().addAll(imageView, r);
