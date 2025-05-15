@@ -1,14 +1,14 @@
 package uet.oop.bomberman.graphics;
 
 import uet.oop.bomberman.entities.*;
-import uet.oop.bomberman.entities.Block.Brick;
-import uet.oop.bomberman.entities.Block.Grass;
-import uet.oop.bomberman.entities.Block.Portal;
-import uet.oop.bomberman.entities.Block.Wall;
-import uet.oop.bomberman.entities.Items.BombPassItem;
-import uet.oop.bomberman.entities.Items.FlameItem;
-import uet.oop.bomberman.entities.Items.SpeedItem;
-import uet.oop.bomberman.entities.Items.WallPassItem; // các import này giúp chương trình truy cấp đến các lớp class khác nhau bao gồm
+import uet.oop.bomberman.entities.Brick;
+import uet.oop.bomberman.entities.Grass;
+import uet.oop.bomberman.entities.Portal;
+import uet.oop.bomberman.entities.Wall;
+import uet.oop.bomberman.entities.Bomitem;
+import uet.oop.bomberman.entities.Flameitem;
+import uet.oop.bomberman.entities.Speeditem;
+import uet.oop.bomberman.entities.WallPassitem; // các import này giúp chương trình truy cấp đến các lớp class khác nhau bao gồm
 // các lơp đối tượng entities và các loại Block item trong game
 
 import static uet.oop.bomberman.BombermanGame.*;
@@ -20,7 +20,7 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 
-public class CreateMap {  // tạo bản đồ từ 1 tệp tin từ dữ liệu được lưu
+public class   CreateMap {  // tạo bản đồ từ 1 tệp tin từ dữ liệu được lưu
     public CreateMap(String pathLevel) {
         File fileName = new File(pathLevel);        //tạo đối tượng File từ tệp pathlevel
         try (FileReader reader = new FileReader(fileName)) {            // mở tệp tin
@@ -61,19 +61,19 @@ public class CreateMap {  // tạo bản đồ từ 1 tệp tin từ dữ liệu
                                 break;
                             case 5:
                                 objIdx[j][i] = value;
-                                object = new WallPassItem(j, i, Sprite.brick.getFxImage());//vật phẩm giúp người chơi vượt qua tường
+                                object = new WallPassitem(j, i, Sprite.brick.getFxImage());//vật phẩm giúp người chơi vượt qua tường
                                 break;
                             case 6:
                                 objIdx[j][i] = value;
-                                object = new SpeedItem(j, i, Sprite.brick.getFxImage());//tăng tốc
+                                object = new Speeditem(j, i, Sprite.brick.getFxImage());//tăng tốc
                                 break;
                             case 7:
                                 objIdx[j][i] = value;
-                                object = new FlameItem(j, i, Sprite.brick.getFxImage());//tặng phạm vi lửa
+                                object = new Flameitem(j, i, Sprite.brick.getFxImage());//tặng phạm vi lửa
                                 break;
                             case 8:
                                 objIdx[j][i] = value;
-                                object = new BombPassItem(j, i, Sprite.brick.getFxImage());//vượt qua boom
+                                object = new Bomitem(j, i, Sprite.brick.getFxImage());//vượt qua boom
                                 break;
                             default:
                                 objIdx[j][i] = value;
