@@ -16,7 +16,7 @@ public class MenuPause extends Parent {
         MyButton MenuBt = new MyButton("Back To Menu");
         MenuBt.setOnMouseClicked(event -> {
             entities.clear();
-            enemies.clear();
+//            enemies.clear();
             stillObjects.clear();
 
             root.getChildren().removeAll(pp, View);

@@ -2,6 +2,7 @@ package uet.oop.bomberman.Menu;
 
 import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
+import uet.oop.bomberman.BombermanGame;
 
 import static uet.oop.bomberman.BombermanGame.*;
 
@@ -16,7 +17,7 @@ public class MenuGameOver extends Parent {
         MyButton PlayBt = new MyButton("PlayAgain");
         PlayBt.setOnMouseClicked(event -> {
 
-            root.getChildren().removeAll(p, V);
+            BombermanGame.root.getChildren().removeAll(p, V);
             root.getChildren().add(bg);
             root.getChildren().add(pa);
         });
@@ -24,7 +25,7 @@ public class MenuGameOver extends Parent {
         MyButton MenuBt = new MyButton("Back To Menu");
         MenuBt.setOnMouseClicked(event -> {
             entities.clear();
-            enemies.clear();
+//            enemies.clear();
             stillObjects.clear();
             root.getChildren().removeAll(bg, pa);
             root.getChildren().removeAll(V, p);
