@@ -3,6 +3,7 @@ package uet.oop.bomberman.entities;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
 
@@ -15,14 +16,9 @@ public abstract class Entity {
 
     protected Image img;
 
-    private boolean removed = false;
-
-    public boolean isRemoved() {
-        return removed;
-    }
 
     public void remove() {
-        this.removed = true;
+        BombermanGame.entitiesToRemove.add(this);
     }
 
     public int getx() {
