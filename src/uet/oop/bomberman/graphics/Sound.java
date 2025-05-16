@@ -3,7 +3,9 @@ package uet.oop.bomberman.graphics;
 import javax.sound.sampled.*; //cung cấp các lớp cần thiết để xử lí âm thanh
 import javax.swing.*;//sử dụng để tạo giao diện người dùng cơ bản
 import java.io.IOException;// sử dụng để xử lí lôi đến nhập xuất dữ liệu
-import java.net.URL;//sử dụng âm thanh từ đường dẫn URL
+import java.net.URL;
+//sử dụng âm thanh từ đường dẫn URL
+import uet.oop.bomberman.BombermanGame;
 
 public class Sound extends JFrame{
     //khai báo các thuộc tính tĩnh
@@ -59,7 +61,7 @@ public class Sound extends JFrame{
             isSoundScreen = true;
         }
 
-        if (!player.getLife()) {
+        if (!BombermanGame.player.getLife()) {
             screen.stop();
             if (!isSoundDie) {
                 new Sound("sound/just_died.wav", "bomberDie");
