@@ -6,12 +6,21 @@ import uet.oop.bomberman.graphics.Sprite;
 
 
 public class Bom extends Entity {
-    private int timeToExplode = 180;
+    private int timeToExplode = 120;
     private int animation;
+    private  int length;
 
+    public void setLength(int length) {
+        this.length = length;
+    }
 
-    public Bom(int x, int y, Image img) {
+    public  int getLength() {
+        return this.length;
+    }
+
+    public Bom(int x, int y, Image img, int length) {
         super(x,y,img);
+        this.length = length;
     }
 
     @Override
@@ -25,13 +34,21 @@ public class Bom extends Entity {
         }
     }
 
-    public static void PlantBom(Entity entity) {
+    public static void PlantBom(Bomber entity,int length) {
             int tileSize = Sprite.SCALED_SIZE;
             int BomX = Math.round((float) entity.getx() /tileSize);
             int BomY =Math.round((float) entity.gety()/tileSize);
-
-            Entity bom = new Bom(BomX,BomY,Sprite.bomb.getFxImage());
-            BombermanGame.entities.add(bom);
+            int x = 0;
+            int numberBom = entity.getNumberBom();
+            for(Entity e : BombermanGame.entities) {
+                if(e instanceof Bom) {
+                    x +=1;
+                }
+            }
+            if( x < numberBom) {
+                Entity bom = new Bom(BomX,BomY,Sprite.bomb.getFxImage(),length);
+                BombermanGame.entities.add(bom);
+            }
     }
 
     public void Explode() {

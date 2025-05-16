@@ -3,8 +3,7 @@ package uet.oop.bomberman.entities;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
 import javafx.scene.input.KeyEvent;
-import uet.oop.bomberman.move.CanMove;
-import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.move.CheckMove;
 
 public class Bomber extends Entity {
     private int animation;
@@ -16,7 +15,26 @@ public class Bomber extends Entity {
     private int timeDead = 60;
     private int direction = -1; // 0= up , 1 = right , 2 = down , 3 = left
 
+    public int speed =2;
     private int heart = 1;
+    private int numberBom = 1;
+    private  int lengthflame = 1;
+
+    public void setLength(int length) {
+        this.lengthflame = length;
+    }
+
+    public  int getLength() {
+        return this.lengthflame;
+    }
+
+    public void setNumberBom(int numberBom) {
+        this.numberBom = numberBom;
+    }
+
+    public int getNumberBom() {
+        return numberBom;
+    }
 
     public void setHeart(int heart) {
         this.heart = heart;
@@ -44,7 +62,7 @@ public class Bomber extends Entity {
                 movingright = true;
                 break;
             case SPACE:
-                Bom.PlantBom(this);
+                Bom.PlantBom(this,lengthflame);
                 break;
         }
     }
@@ -69,54 +87,54 @@ public class Bomber extends Entity {
         animation ++;
         chooseSprite();
         calculateMove();
-        if(heart == 0) {
+        if(heart <= 0) {
             BomBerDie();
             timeDead --;
-            if(timeDead <=0) {
+            if(timeDead ==0) {
                 this.remove();
             }
         }
     }
     private void calculateMove() {
         moving = false;
-        if(movingleft) {
-            x--; direction =3;
-            if(CanMove.checkRun(this)) {
+        if (movingleft) {
+            x -= speed;
+            direction = 3;
+            if (CheckMove.checkRun(this)) {
                 moving = true;
-            }
-            else {
-                x++;
+            } else {
+                x += speed;
             }
         }
-        if(movingright) {
-            x ++; direction = 1;
-            if(CanMove.checkRun(this)) {
+        if (movingright) {
+            x += speed;
+            direction = 1;
+            if (CheckMove.checkRun(this)) {
                 moving = true;
-            }
-            else {
-                x--;
+            } else {
+                x -= speed;
             }
         }
-
-        if(movingdown) {
-            y++; direction = 2;
-            if(CanMove.checkRun(this)) {
+        if (movingdown) {
+            y += speed;
+            direction = 2;
+            if (CheckMove.checkRun(this)) {
                 moving = true;
-            }
-            else {
-                y--;
+            } else {
+                y -= speed;
             }
         }
-        if(movingup) {
-            y --; direction =0;
-            if(CanMove.checkRun(this)) {
+        if (movingup) {
+            y -= speed;
+            direction = 0;
+            if (CheckMove.checkRun(this)) {
                 moving = true;
-            }
-            else {
-                y++;
+            } else {
+                y += speed;
             }
         }
     }
+
     private void chooseSprite() {
         switch (direction) {
             case 0: // UP
