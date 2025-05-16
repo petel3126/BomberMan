@@ -17,16 +17,24 @@ public class MenuGame extends Parent {
 
         menu.setTranslateX(300);
         menu.setTranslateY(350);
-        Image image1 = new Image("file:res/imageMenu/Pause.png");
-        // Tạo ImageView từ Image
-        ImageView pauseImageView = new ImageView(image1);
 
+        Image img = new Image("file:res/imageMenu/Pause.png");
 
         MyButton PlayBt = new MyButton("Play");
         PlayBt.setOnMouseClicked(event -> {
+            root.getChildren().removeAll(r, imageView, pp);
 
-            root.getChildren().removeAll(r, imageView);
+            // ⚠️ Reset lại phần chơi
+            pa.getChildren().clear();         // Dọn phần chơi cũ
+                              // ⚠️ Gọi lại hàm setup map, bomber, enemy...
+
+            // Thêm lại phần chơi
             root.getChildren().addAll(bg, pa);
+
+            // Thêm lại nút pause nếu chưa có
+            if (!root.getChildren().contains(pauseBt)) {
+                root.getChildren().add(pauseBt);
+            }
         });
 
         MyButton ExitBt = new MyButton("Exit");

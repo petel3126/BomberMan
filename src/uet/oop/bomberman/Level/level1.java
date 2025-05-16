@@ -1,7 +1,6 @@
 package uet.oop.bomberman.Level;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import uet.oop.bomberman.GameBoard;
 import uet.oop.bomberman.entities.Portal;
 import uet.oop.bomberman.entities.Bomber;
 import uet.oop.bomberman.entities.Entity.*;
@@ -42,8 +41,8 @@ public class level1 {
         listBombMiddleHorizontal.clear();
         isSoundDie = false;
         isSoundScreen = false;
-        GameBoard gameBoard = new GameBoard(stillObjects);
-        player = new Bomber(1, 1, Sprite.player_right.getFxImage(),gameBoard);
+
+        player = new Bomber(1, 1, Sprite.player_right.getFxImage());
         player.setLife(true);
     }
 

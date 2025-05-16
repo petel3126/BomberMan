@@ -9,6 +9,5 @@ public class Flameitem extends Entity {
 
     @Override
     public void update() {
-
     }
 }

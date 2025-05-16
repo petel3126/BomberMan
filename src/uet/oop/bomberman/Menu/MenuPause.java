@@ -16,12 +16,12 @@ public class MenuPause extends Parent {
         MyButton MenuBt = new MyButton("Back To Menu");
         MenuBt.setOnMouseClicked(event -> {
             entities.clear();
-            enemies.clear();
+//            enemies.clear();
             stillObjects.clear();
 
-            root.getChildren().removeAll(pp, View);
+            root.getChildren().removeAll(pp,View);
             root.getChildren().removeAll(bg, pa);
-            root.getChildren().addAll(imageView, r);
+            root.getChildren().addAll(imageView,r);
             running = true;
         });
 
@@ -29,7 +29,7 @@ public class MenuPause extends Parent {
         ResumeBt.setOnMouseClicked(event -> {
             isPause = false;
             running = true;
-            root.getChildren().removeAll(pp, View);
+            root.getChildren().removeAll(pp,View);
         });
         MyButton ExitBt = new MyButton("Exit");
         ExitBt.setOnMouseClicked(event -> {
