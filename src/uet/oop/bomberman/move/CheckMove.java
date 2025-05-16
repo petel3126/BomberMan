@@ -8,7 +8,7 @@ import uet.oop.bomberman.entities.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
 
-public class CanMove {
+public class CheckMove {
     public static boolean checkRun(Entity entity) {
         if (entity instanceof Bomber) {
             for (Entity e : BombermanGame.stillObjects) {
@@ -41,6 +41,4 @@ public class CanMove {
                 aY < bY + size &&
                 aY + size > bY;
     }
-
-
 }

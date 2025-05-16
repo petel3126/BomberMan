@@ -150,7 +150,11 @@ public class BombermanGame extends Application {
 
         createMap();
         Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
-        Entity ballom = new Ballom(5,10,Sprite.balloom_left1.getFxImage());
+        Entity ballom = new Balloom(5,10,Sprite.balloom_left1.getFxImage());
+        Entity bomitem = new Bomitem(5,5,Sprite.powerup_bombs.getFxImage());
+        Entity flameitem = new Flameitem(5,6,Sprite.powerup_flames.getFxImage());
+        entities.add(flameitem);
+        entities.add(bomitem);
         entities.add(ballom);
         entities.add(bomberman);
 
