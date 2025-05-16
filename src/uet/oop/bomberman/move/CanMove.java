@@ -21,7 +21,7 @@ public class CanMove {
         return true;
     }
 
-    private static boolean intersects(Entity a, Entity b) {
+    public static boolean intersects(Entity a, Entity b) {
         // kiem tra theo toa do hinh chu nhat thay vi tam
         int aX = a.getx();
         int aY = a.gety();
