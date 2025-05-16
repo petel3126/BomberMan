@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
 import javafx.scene.input.KeyEvent;
 import uet.oop.bomberman.move.CanMove;
-import uet.oop.bomberman.GameBoard;
+import uet.oop.bomberman.BombermanGame;
 
 public class Bomber extends Entity {
     private int animation;
@@ -13,12 +13,20 @@ public class Bomber extends Entity {
     private boolean movingleft;
     private boolean movingright;
     private boolean movingdown;
+    private int timeDead = 60;
     private int direction = -1; // 0= up , 1 = right , 2 = down , 3 = left
-    private GameBoard gameBoard;
 
-    public Bomber(int x, int y, Image img, GameBoard gameBoard ) {
+    private int heart = 1;
+
+    public void setHeart(int heart) {
+        this.heart = heart;
+    }
+    public int getHeart() {
+        return heart;
+    }
+
+    public Bomber(int x, int y, Image img ) {
         super( x, y, img);
-        this.gameBoard = gameBoard;
     }
 
     public void handleKeyPress(KeyEvent e) {
@@ -61,12 +69,19 @@ public class Bomber extends Entity {
         animation ++;
         chooseSprite();
         calculateMove();
+        if(heart == 0) {
+            BomBerDie();
+            timeDead --;
+            if(timeDead <=0) {
+                this.remove();
+            }
+        }
     }
     private void calculateMove() {
         moving = false;
         if(movingleft) {
             x--; direction =3;
-            if(CanMove.checkRun(this,gameBoard)) {
+            if(CanMove.checkRun(this)) {
                 moving = true;
             }
             else {
@@ -75,16 +90,17 @@ public class Bomber extends Entity {
         }
         if(movingright) {
             x ++; direction = 1;
-            if(CanMove.checkRun(this,gameBoard)) {
+            if(CanMove.checkRun(this)) {
                 moving = true;
             }
             else {
                 x--;
             }
         }
+
         if(movingdown) {
             y++; direction = 2;
-            if(CanMove.checkRun(this,gameBoard)) {
+            if(CanMove.checkRun(this)) {
                 moving = true;
             }
             else {
@@ -93,7 +109,7 @@ public class Bomber extends Entity {
         }
         if(movingup) {
             y --; direction =0;
-            if(CanMove.checkRun(this,gameBoard)) {
+            if(CanMove.checkRun(this)) {
                 moving = true;
             }
             else {
@@ -120,5 +136,8 @@ public class Bomber extends Entity {
                         : Sprite.player_left.getFxImage();
                 break;
         }
+    }
+    public void BomBerDie() {
+        img = Sprite.movingSprite(Sprite.player_dead1,Sprite.player_dead2,Sprite.player_dead3,animation,60).getFxImage();
     }
 }

@@ -1,6 +1,5 @@
 package uet.oop.bomberman;
 
-
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -15,16 +14,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+
 import uet.oop.bomberman.Menu.*;
-import uet.oop.bomberman.entities.Bomber;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Grass;
-import uet.oop.bomberman.entities.Wall;
+
+import uet.oop.bomberman.entities.*;
+
 
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -46,8 +44,9 @@ public class BombermanGame extends Application {
     private GraphicsContext gc;
     private Canvas canvas;
     public static List<Entity> entities = new ArrayList<>();
-    public static List<Entity> enemies = new ArrayList<>();
     public static List<Entity> stillObjects = new ArrayList<>();
+    public static List<Entity> entitiesToRemove = new ArrayList<>(); // tao list cac object can xoa
+
 
     public static ImageView imageView;
 
@@ -84,16 +83,20 @@ public class BombermanGame extends Application {
 
         root = new Group();
         root.getChildren().add(canvas);
+
+        // thiet ke giao dien
         MenuGame menuGame = new MenuGame();
         r = new Pane();
         r.getChildren().add(menuGame);
         Image img1 = new Image("file:res/imageMenu/1BomberMenu.png");
         imageView = new ImageView(img1);
-        p = new Pane();
+
         MenuGameOver menuGameOver = new MenuGameOver();
+        p = new Pane();
         p.getChildren().add(menuGameOver);
         Image img2 = new Image("file:res/imageMenu/1Gameover.png");
         V = new ImageView(img2);
+
 
         MenuWinGame menuWinGame = new MenuWinGame();
         pane = new Pane();
@@ -146,8 +149,9 @@ public class BombermanGame extends Application {
         timer.start();
 
         createMap();
-        GameBoard gameBoard = new GameBoard(stillObjects);
-        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage(),gameBoard);
+        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+        Entity ballom = new Ballom(5,10,Sprite.balloom_left1.getFxImage());
+        entities.add(ballom);
         entities.add(bomberman);
 
         // xu ly phim
@@ -172,14 +176,11 @@ public class BombermanGame extends Application {
     }
 
     public void update() {
-        Iterator<Entity> iterator = entities.iterator();
-        while (iterator.hasNext()) {
-            Entity e = iterator.next();
+        for(Entity e : new ArrayList<>(entities)) {  // tranh viec xoa doi tuong nao day trong vong lap  ko gay loi
             e.update();
-            if (e.isRemoved()) {
-                iterator.remove();
-            }
         }
+        entities.removeAll(entitiesToRemove);
+        entitiesToRemove.clear();
     }
 
     public void render() {

@@ -59,12 +59,12 @@ public class Sound extends JFrame{
             isSoundScreen = true;
         }
 
-        /*if (!player.getLife()) {
+        if (!player.getLife()) {
             screen.stop();
             if (!isSoundDie) {
                 new Sound("sound/just_died.wav", "bomberDie");
                 isSoundDie = true;
             }
-        }*/
+        }
     }
 }
