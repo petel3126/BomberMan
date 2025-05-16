@@ -7,18 +7,18 @@ import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-
+import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import uet.oop.bomberman.Menu.MenuGame;
-import uet.oop.bomberman.Menu.MenuGameOver;
-import uet.oop.bomberman.Menu.MenuPause;
-import uet.oop.bomberman.Menu.MenuWinGame;
+
+import uet.oop.bomberman.Menu.*;
+
 import uet.oop.bomberman.entities.*;
+
 
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -55,6 +55,7 @@ public class BombermanGame extends Application {
     public static boolean running = true;
     public static ImageView V;
     public static ImageView imgView;
+    public static MyButton pauseBt ;
     public static Pane p;
     public static Pane r;
     public static Pane pane;
@@ -87,25 +88,40 @@ public class BombermanGame extends Application {
         MenuGame menuGame = new MenuGame();
         r = new Pane();
         r.getChildren().add(menuGame);
-        Image img1 = new Image("file:res/imageMenu/BomberMenu.png");
+        Image img1 = new Image("file:res/imageMenu/1BomberMenu.png");
         imageView = new ImageView(img1);
 
         MenuGameOver menuGameOver = new MenuGameOver();
         p = new Pane();
         p.getChildren().add(menuGameOver);
-        Image img2 = new Image("file:res/imageMenu/Gameover.png");
+        Image img2 = new Image("file:res/imageMenu/1Gameover.png");
         V = new ImageView(img2);
 
 
         MenuWinGame menuWinGame = new MenuWinGame();
         pane = new Pane();
         pane.getChildren().add(menuWinGame);
-        Image img3 = new Image("file:res/imageMenu/winner.png");
+        Image img3 = new Image("file:res/imageMenu/1winner.png");
         imgView = new ImageView(img3);
 
+// tạo nút pause
         MenuPause menuPause = new MenuPause();
         pp = new Pane();
-        pp.getChildren().add(menuPause);
+        pp.getChildren().add(menuPause); // Thêm MenuPause vào nếu chưa có
+        pauseBt = new MyButton("Pause");
+
+// Sự kiện khi nhấn Pause
+        Image im = new Image("file:res/imageMenu/Pause.png");
+        View = new ImageView(im);
+        pauseBt.setOnMouseClicked(event -> {
+            root.getChildren().remove(pa);     // Ẩn giao diện chơi
+            if (!root.getChildren().contains(pp)) {
+                root.getChildren().addAll(View,pp);    // Hiện menu pause nếu chưa có
+            }
+        });
+
+
+
         bg = new Rectangle(300, 28);
         bg.setFill(Color.GRAY);
         bg.setY(2);
@@ -172,5 +188,8 @@ public class BombermanGame extends Application {
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
     }
+
+
+
 
 }
