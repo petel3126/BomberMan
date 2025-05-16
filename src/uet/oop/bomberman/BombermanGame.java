@@ -116,6 +116,7 @@ public class BombermanGame extends Application {
 
 
 
+
         // Tao scene
         Scene scene = new Scene(root);
 
