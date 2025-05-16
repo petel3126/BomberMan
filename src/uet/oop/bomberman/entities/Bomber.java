@@ -13,12 +13,17 @@ public class Bomber extends Entity {
     private boolean movingleft;
     private boolean movingright;
     private boolean movingdown;
+    private boolean life;
     private int direction = -1; // 0= up , 1 = right , 2 = down , 3 = left
     private GameBoard gameBoard;
+
 
     public Bomber(int x, int y, Image img, GameBoard gameBoard ) {
         super( x, y, img);
         this.gameBoard = gameBoard;
+    }
+    public boolean getLife(){
+        return this.life;
     }
 
     public void handleKeyPress(KeyEvent e) {

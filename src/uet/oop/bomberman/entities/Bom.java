@@ -3,9 +3,30 @@ package uet.oop.bomberman.entities;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
+import java.util.ArrayList;
+
+import java.util.List;
 
 
 public class Bom extends Entity {
+    public static int stateExplosion = 1;
+    public static int bombPower = 0;
+    public static int bombPowerLeft = 0;
+    public static int bombPowerRight = 0;
+    public static int bombPowerUp = 0;
+    public static int bombPowerDown = 0;
+    public static int isPlanted = 0;
+    public static boolean isMiddle = false;
+    public static boolean isEdge = false;
+
+    public static Entity lastEdgeUp = null;
+    public static Entity lastEdgeDown = null;
+    public static Entity lastEdgeLeft = null;
+    public static Entity lastEdgeRight = null;
+
+    public static final List<Entity> listBombMiddleVertical = new ArrayList<>();
+    public static final List<Entity> listBombMiddleHorizontal = new ArrayList<>();
+
     private int timeToExplode = 180;
     private int animation;
     public Bom(int x, int y, Image img) {

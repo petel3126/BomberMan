@@ -12,10 +12,26 @@ public abstract class Entity {
 
     //Tọa độ Y tính từ góc trái trên trong Canvas
     protected int y;
+    protected int count;
+    protected int direction;
+    protected int delayPerStep;
+    protected boolean life = true;
+
+    protected int standing = 1;
 
     protected Image img;
 
     private boolean removed = false;
+    //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
+    public Entity( int xUnit, int yUnit, Image img) {
+        this.x = xUnit * Sprite.SCALED_SIZE;
+        this.y = yUnit * Sprite.SCALED_SIZE;
+        this.img = img;
+    }
+    public Entity(){
+
+    }
+
 
     public boolean isRemoved() {
         return removed;
@@ -37,12 +53,54 @@ public abstract class Entity {
     public void setY(int y) {
         this.y = y;
     }
+    public boolean getLife(){
+        return life;
+    }
+    public void setLife(boolean life){
+        this.life=life;
+    }
 
-    //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
-    public Entity( int xUnit, int yUnit, Image img) {
-        this.x = xUnit * Sprite.SCALED_SIZE;
-        this.y = yUnit * Sprite.SCALED_SIZE;
+    public Image getImg() {
+        return img;
+    }
+
+    public void setImg(Image img) {
         this.img = img;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public int getDirection() {
+        return direction;
+    }
+
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
+
+    public int getDelayPerStep() {
+        return delayPerStep;
+    }
+
+    public void setDelayPerStep(int delayPerStep) {
+        this.delayPerStep = delayPerStep;
+    }
+    public int getStanding() {
+        return standing;
+    }
+
+    public void setStanding(int standing) {
+        this.standing = standing;
+    }
+
+    public void run() {
+        setDelayPerStep(getDelayPerStep() + 1);
     }
 
     // ve hinh
