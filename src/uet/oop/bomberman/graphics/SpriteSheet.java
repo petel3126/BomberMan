@@ -1,12 +1,10 @@
 package uet.oop.bomberman.graphics;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+
+import javax.imageio.ImageIO;
 
 /**
  * Tất cả sprite (hình ảnh game) được lưu trữ vào một ảnh duy nhất
@@ -14,6 +12,10 @@ import java.net.URL;
  */
 public class SpriteSheet {
 
+	// đường dẫn đến ảnh chung
+	// mỗi sprite có kích thước 16x16 pixel
+	// có 256 sprite
+	// ảnh được lưu trữ trong file classic.png
 	private String _path;
 	public final int SIZE;
 	public int[] _pixels;
@@ -28,6 +30,12 @@ public class SpriteSheet {
 		load();
 	}
 	
+	/**
+	 * Lấy ra 1 sprite từ ảnh chung
+	 * @param x vị trí x của sprite trong ảnh chung
+	 * @param y vị trí y của sprite trong ảnh chung
+	 * @return sprite thứ x, y
+	 */
 	private void load() {
 		try {
 			URL a = SpriteSheet.class.getResource(_path);
@@ -40,5 +48,4 @@ public class SpriteSheet {
 			System.exit(0);
 		}
 	}
-
 }

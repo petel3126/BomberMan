@@ -2,117 +2,125 @@ package uet.oop.bomberman.entities;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
+import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.bomb.Bomb;
+import uet.oop.bomberman.entities.tile.Brick;
+import uet.oop.bomberman.entities.tile.Wall;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.level.Coordinates;
 
 
 public abstract class Entity {
-    //Tọa độ X tính từ góc trái trên trong Canvas
+
     protected int x;
 
-    //Tọa độ Y tính từ góc trái trên trong Canvas
     protected int y;
-    protected int count;
-    protected int direction;
-    protected int delayPerStep;
-    protected boolean life = true;
-
-    protected int standing = 1;
 
     protected Image img;
 
-    private boolean removed = false;
+    protected Sprite sprite;
+
+    protected int animate = 0;
+
+    protected int life = 1;
+    
+    protected boolean died = false;
+
+    protected boolean hurt = false;
+    protected int hurt_time = 0;
+
+    protected int speed = 1; // pixel / frame
+
+    protected Direction direction = Direction.R;
+
     //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
-    public Entity( int xUnit, int yUnit, Image img) {
+    public Entity(int xUnit, int yUnit, Image img) {
         this.x = xUnit * Sprite.SCALED_SIZE;
         this.y = yUnit * Sprite.SCALED_SIZE;
         this.img = img;
     }
-    public Entity(){
 
-    }
-
-
-    public boolean isRemoved() {
-        return removed;
-    }
-
-    public void remove() {
-        this.removed = true;
-    }
-
-    public int getx() {
-        return x;
-    }
-    public void setX(int x) {
-        this.x = x;
-    }
-    public int gety() {
-        return y;
-    }
-    public void setY(int y) {
-        this.y = y;
-    }
-    public boolean getLife(){
-        return life;
-    }
-    public void setLife(boolean life){
-        this.life=life;
-    }
-
-    public Image getImg() {
-        return img;
-    }
-
-    public void setImg(Image img) {
+    public void setImage(Image img) {
         this.img = img;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public static Entity getEntity(int x, int y) {
+        return BombermanGame.table[x][y];
     }
 
-    public int getCount() {
-        return count;
+    /**
+     * Kiểm tra xem có thể di chuyển tới vị trí x, y hay không
+     */
+    public static boolean checkWall(int x, int y) {
+        if (x < 0 || y < 0 || x > Sprite.SCALED_SIZE * BombermanGame.WIDTH || y > Sprite.SCALED_SIZE * BombermanGame.HEIGHT)
+            return false;
+
+        x /= Sprite.SCALED_SIZE;
+        y /= Sprite.SCALED_SIZE;
+        Entity entity = getEntity(x, y);
+        
+        return !(entity instanceof Wall) && !(entity instanceof Brick) && !(entity instanceof Bomb);
     }
 
-    public int getDirection() {
-        return direction;
+    /**
+     * Kiểm tra xem có thể di chuyển tới vị trí x, y hay không
+     * x là tọa độ pixel của entity
+     * y là tọa độ pixel của entity
+     */
+    public static boolean checkBrick(int x, int y) {
+        if (x < 0 || y < 0 || x > Sprite.SCALED_SIZE * BombermanGame.WIDTH || y > Sprite.SCALED_SIZE * BombermanGame.HEIGHT)
+            return false;
+
+        x /= Sprite.SCALED_SIZE;
+        y /= Sprite.SCALED_SIZE;
+        Entity entity = getEntity(x, y);
+        return !(entity instanceof Wall) && !(entity instanceof Bomb);
     }
 
-    public void setDirection(int direction) {
-        this.direction = direction;
+
+    public int getTileX() {
+        return Coordinates.pixelToTile(x);
     }
 
-    public int getDelayPerStep() {
-        return delayPerStep;
+    public int getTileY() {
+        return Coordinates.pixelToTile(y);
     }
 
-    public void setDelayPerStep(int delayPerStep) {
-        this.delayPerStep = delayPerStep;
-    }
-    public int getStanding() {
-        return standing;
+    public int getX() {
+        return x;
     }
 
-    public void setStanding(int standing) {
-        this.standing = standing;
+    public int getY() {
+        return y;
     }
 
-    public void run() {
-        setDelayPerStep(getDelayPerStep() + 1);
+    public void setDied() {
+        this.died = true;
     }
 
-    // ve hinh
+    public Sprite getSprite() {
+        return this.sprite;
+    }
+
+    public void reduceLife() {
+        this.life--;
+    }
+
+    public void setHurt() {
+        if (!hurt) {
+            reduceLife();
+        }
+        hurt = true;
+    }
+
     public void render(GraphicsContext gc) {
         gc.drawImage(img, x, y);
     }
+
     public abstract void update();
-    // nhan dau hien di chuyen tu ban phim
-    public void handleKeyPress(KeyEvent event) {
 
-    };
-    public  void handleKeyRelease(KeyEvent event) {
+    public enum Direction {
+        L, R, U, D, OH, OV
+    }
 
-    };
 }

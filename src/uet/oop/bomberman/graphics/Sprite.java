@@ -1,17 +1,21 @@
 package uet.oop.bomberman.graphics;
 
-import javafx.scene.image.*;
-
-import java.awt.image.BufferedImage;
-import java.nio.IntBuffer;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
 
 /**
  * Lưu trữ thông tin các pixel của 1 sprite (hình ảnh game)
  */
 public class Sprite {
-	
+
+	public static final int STEP = 2;
+	public static final int MENU_STEP = 2;
 	public static final int DEFAULT_SIZE = 16;
-	public static final int SCALED_SIZE = DEFAULT_SIZE * 2;
+	public static final int MENU_SIZE = DEFAULT_SIZE * MENU_STEP;
+	public static final int SCALED_SIZE = DEFAULT_SIZE * STEP;
     private static final int TRANSPARENT_COLOR = 0xffff00ff;
 	public final int SIZE;
 	private int _x, _y;
@@ -235,6 +239,29 @@ public class Sprite {
 		int diff = time / 2;
 		return (animate % time > diff) ? x1 : x2; 
 	}
+
+	/**
+	 * time là số frame trong 1 lần di chuyển
+	 * animate là số frame đã di chuyển
+	 * x1 là sprite di chuyển từ trái sang phải
+	 * x2 là sprite di chuyển từ phải sang trái
+	 * x3 là sprite di chuyển từ trên xuống dưới
+	 * x4 là sprite di chuyển từ dưới lên trên
+	 */
+	public static Sprite movingSprite(Sprite x1, Sprite x2, Sprite x3, Sprite x4, int animate, int time) {
+		int diff = time / 4;
+		int calc = animate % time;	
+		if(calc < diff) {
+			return x1;	
+		}
+		if(calc < diff * 2) {
+			return x2;	
+		}
+		if(calc < diff * 3) {
+			return x3;	
+		}
+		return x4;
+	}
 	
 	public int getSize() {
 		return SIZE;
@@ -284,7 +311,6 @@ public class Sprite {
 				}
 			}
 		}
-
 		return output;
 	}
 }
